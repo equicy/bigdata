@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>天津赴外省数据</title>
+    <link rel="stylesheet" href="../../css/index.css">
+    <script src="../../js/jquery.min.js" charset="utf-8"></script>
+    <script src="../../js/echarts.min.js" charset="utf-8"></script>
+    <script src="../../js/china.js" charset="utf-8"></script>
+    <style media="screen">
+      .ldata-title{
+        height: 70px;
+        line-height: 70px;
+        background: #e0dfd5;
+        color: #e57117;
+        padding-left: 20px;
+        font-size: 30px;
+      }
+      .ldata-neck{
+        height: 430px;
+        background: #e8e9eb;
+      }
+      .goway{
+        box-sizing: border-box;
+        display: flex;
+        padding-bottom: 20px;
+      }
+      .way-item{
+        flex: 1;
+        margin-right: 45px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        border: 5px solid #f56e4e;
+        font-size: 15px;
+      }
+      .way-item span{
+        font-size: 20px;
+        color: #5a5f70;
+      }
+      .goway-title{
+        box-sizing: border-box;
+        display: flex;
+      }
+      .goway-title span{
+        display: inline-block;
+        text-align: center;
+        margin-right: 45px;
+        flex: 1;
+        font-size: 22px;
+        color: #5a5f70;
+      }
+      .ldata-leg{
+        margin-top: 30px;
+      }
+      .leg-content{
+        width: 100%;
+        height: 380px;
+        background: #e8e9eb;
+      }
+    </style>
+    <!--  -->
+  </head>
+  <body>
+    <header style="height: 100px; line-height: 100px">
+      <span onclick="window.history.back()"><img width="52" height="48" src="../../img/home.png" style="vertical-align: top;margin-top: 30px"></span>
+      <span style="margin-left: 370px; font-size: 45px; color: #333e4b">南开大学旅游数据统计</span>
+    </header>
+    <div class="ldata">
+      <div class="ldata-title">
+        <span>政务公众号各省排名</span>
+      </div>
+      <div class="ldata-neck">
+        <div id="main" style="width: 1350px;height:380px;"></div>
+      </div>
+      <div class="ldata-leg">
+        <div class="ldata-title">
+          <span>企业公众号各省排行</span>
+        </div>
+        <div class="leg-content">
+          <div id="main-bottom" style="width: 1350px;height:380px;"></div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        $(document).ready(function() {
+        // var map = new BMap.Map("container");
+        // var localSearch = new BMap.LocalSearch(map);
+        var arr=[];
+        var arrtext=[];
+        var keyword='';
+        var pointxy='';
+        var pointxyz = []
+        $.get('http://118.89.233.206/bigdata/index.php/tj/inbound?year=2017&month=9').done(function (data) {
+        var dvalue = JSON.parse(data);
+        // console.log(dvalue.data.map);
+        for(var i=0;i<dvalue.data.histogram.length;i++){
+            var obj=dvalue.data.histogram[i];
+            // console.log(dvalue.data)
+            for (var key in obj){//遍历键值对
+                arr.push(key);
+                arrtext.push(obj[key])
+            }
+        }
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        option = {
+          color: ['#3398DB'],
+          tooltip : {
+              trigger: 'axis',
+              axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                  type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+              }
+          },
+          grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+          },
+          xAxis : [
+              {
+                  type : 'category',
+                  data : arr,
+                  axisTick: {
+                      alignWithLabel: true
+                  }
+              }
+          ],
+          yAxis : [
+              {
+                  type : 'value'
+              }
+          ],
+          series : [
+              {
+                  // name:'直接访问',
+                  type:'bar',
+                   itemStyle: {
+                            normal: {
+                                color: ['#2b3a67']
+                            },
+                            emphasis: {
+                                // color: ['#FA7108']
+                            }
+                        },
+                  barWidth: '30%',
+                  data: arrtext
+              }
+          ]
+        };
+          myChart.setOption(option);
+        })
+      })
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var myChart = echarts.init(document.getElementById('main-bottom'));
+        var arr = [];
+        var arrtext = [];
+        $.get('http://118.89.233.206/bigdata/index.php/tj/otherprovinces?year=2017&month=1').done(function (data) {
+          var dvalue = JSON.parse(data);
+          for(var i=0;i<dvalue.data.histogram.length;i++){
+              var obj=dvalue.data.histogram[i];
+              // console.log(dvalue.data)
+              for (var key in obj){//遍历键值对
+                  arr.push(key);
+                  arrtext.push(obj[key])
+              }
+          }
+          console.log(arr);
+          option = {
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : arr,
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    // name:'直接访问',
+                    type:'bar',
+                     itemStyle: {
+                              normal: {
+                                  color: ['#2b3a67']
+                              },
+                              emphasis: {
+                                  // color: ['#FA7108']
+                              }
+                          },
+                    barWidth: '30%',
+                    data: arrtext
+                }
+            ]
+          };
+          myChart.setOption(option);
+        })
+      })
+    </script>
+  </body>
+</html>

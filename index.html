@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>南开大数据平台</title>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/jquery.min.js"></script>
+
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/index.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <header style="height: 100px; line-height: 100px">
+      <span><img width="52" height="48" src="./img/home.png" style="vertical-align: top;margin-top: 30px"></span>
+      <span style="margin-left: 370px; font-size: 45px; color: #333e4b">南开大学旅游数据统计</span>
+    </header>
+    <div id="myCarousel" class="carousel slide">
+      <ol class="carousel-indicators" >
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" >
+          <div class="item active">
+              <img src="img/tianjin4.png" alt="First slide" >
+          </div>
+          <div class="item">
+              <img src="img/tianjin1.jpg" alt="Second slide">
+          </div>
+          <div class="item">
+              <img src="img/tianjin3.jpg" alt="Third slide">
+          </div>
+      </div>
+      <a class="carousel-control left" href="#myCarousel"
+          data-slide="prev">
+      </a>
+      <a class="carousel-control right" href="#myCarousel"
+          data-slide="next">
+      </a>
+    </div>
+    <div class="navigation">
+      <div class="n-title">
+        <span>南开大学</span>
+      </div>
+      <div class="n-tab">
+        <ul class="nav">
+          <li class="active">
+            <a href="#tab1" data-toggle="tab">旅游消费数据</a>
+          </li>
+          <li>
+            <a href="#tab2" data-toggle="tab">全国数据</a>
+          </li>
+          <li>
+            <a href="#tab3" data-toggle="tab">天津数据</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-content">
+      <div class="tab-pane fade in active navtab" id="tab1">
+        <span onclick="window.location.href='./component/consume/basefeature.html'">人口特征</span>
+        <span onclick="window.location.href='./component/consume/confeature.html'">消费特征</span>
+        <span onclick="window.location.href='./component/consume/attfocus.html'">关注热点</span>
+        <span onclick="window.location.href='./component/consume/arealvariation.html'">地域差别</span>
+        <span onclick="window.location.href='./component/consume/whatsort.html'">供给侧营销水平</span>
+      </div>
+      <div class="tab-pane fade navtab" id="tab2">
+        <span onclick="window.location.href='./component/chinadata/otherPexit.html'">各省出境旅游计</span>
+        <span onclick="window.location.href='./component/chinadata/otherPcount.html'">各省旅游人数计</span>
+        <span onclick="window.location.href='./component/chinadata/otherPentry.html'">各省入境旅游计</span>
+        <span onclick="window.alert('该模块尚未开放')">敬请期待</span>
+        <span onclick="window.alert('该模块尚未开放')">敬请期待</span>
+      </div>
+      <div class="tab-pane fade navtab" id="tab3">
+        <span onclick="window.location.href='./component/tjdata/tjTOother/tjTOother.html'">天津赴外省</span>
+        <span onclick="window.location.href='./component/tjdata/tjexit.html'">天津出境游</span>
+        <span onclick="window.location.href='./component/tjdata/tjentry.html'">天津入境游</span>
+        <span onclick="window.location.href='./component/tjdata/tjcount.html'">天津景点计</span>
+        <span onclick="window.alert('该模块尚未开放')">敬请期待</span>
+      </div>
+    </div>
+  </body>
+</html>

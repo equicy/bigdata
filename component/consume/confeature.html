@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>出境天津数据</title>
+    <link rel="stylesheet" href="../../css/index.css">
+    <script src="../../js/jquery.min.js" charset="utf-8"></script>
+    <script src="../../js/echarts.min.js" charset="utf-8"></script>
+    <script src="../../js/china.js" charset="utf-8"></script>
+    <style media="screen">
+      .ldata-title{
+        height: 70px;
+        line-height: 70px;
+        background: #e0dfd5;
+        color: #e57117;
+        padding-left: 20px;
+        font-size: 30px;
+      }
+      .ldata-neck{
+        margin-top: 30px;
+        height: 430px;
+        background: #e8e9eb;
+        float: left;
+        overflow: hidden;
+      }
+      .goway{
+        box-sizing: border-box;
+        display: flex;
+        padding-bottom: 20px;
+      }
+      .way-item{
+        flex: 1;
+        margin-right: 45px;
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        border: 5px solid #f56e4e;
+        font-size: 15px;
+      }
+      .way-item span{
+        font-size: 20px;
+        color: #5a5f70;
+      }
+      .goway-title{
+        box-sizing: border-box;
+        display: flex;
+      }
+      .goway-title span{
+        display: inline-block;
+        text-align: center;
+        margin-right: 45px;
+        flex: 1;
+        font-size: 22px;
+        color: #5a5f70;
+      }
+      .ldata-leg{
+        margin-top: 30px;
+      }
+      .leg-left{
+        float: left;
+        margin-right: 30px;
+      }
+      .leg-right{
+        float: left;
+      }
+      .leg-content{
+        width: 100%;
+        height: 380px;
+        background: #e8e9eb;
+      }
+    </style>
+    <!--  -->
+  </head>
+  <body>
+    <header style="height: 100px; line-height: 100px">
+      <span onclick="window.history.back()"><img width="52" height="48" src="../../img/home.png" style="vertical-align: top;margin-top: 30px"></span>
+      <span style="margin-left: 370px; font-size: 45px; color: #333e4b">南开大学旅游数据统计</span>
+    </header>
+    <div class="ldata">
+      <div class="ldata-leg">
+        <div class="leg-left">
+          <div class="ldata-title">
+            <span>工作状态统计</span>
+          </div>
+          <div class="leg-content">
+            <div id="bottom-left" style="width:660px;height:380px;"></div>
+          </div>
+        </div>
+        <div class="leg-right">
+          <div class="ldata-title">
+            <span>消费特征</span>
+          </div>
+          <div class="leg-content">
+            <div id="bottom-right" style="width:660px;height:380px;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ldata-neck">
+        <div class="ldata-title">
+          <span>家庭状态统计</span>
+        </div>
+        <div id="main" style="width: 1350px;height:380px;"></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var myChart = echarts.init(document.getElementById('main'));
+        var arr = [];
+        var arrtext = [];
+        $.get('http://118.89.233.206/bigdata/index.php/analysis/spend?year=2017&month=1').done(function (data) {
+          var dvalue = JSON.parse(data);
+          for(var i=0;i<dvalue.data.family.length;i++){
+               var obj=dvalue.data.family[i];
+               arr.push(obj.name)
+               arrtext.push(obj.value*1000)
+           }
+          // console.log(arr);
+          option = {
+           xAxis: {
+               data: arr,
+               axisLabel: {
+                   // inside: true,
+                   interval:0,//横轴信息全部显示
+                   rotate:-10,//-30度角倾斜显示
+                   textStyle: {
+                       color: '#626a81'
+                   }
+               },
+               axisTick: {
+                   show: false
+               },
+               axisLine: {
+                   show: false
+               },
+               z: 10
+           },
+           yAxis: {
+               axisLine: {
+                   show: false
+               },
+               axisTick: {
+                   show: false
+               },
+               axisLabel: {
+                   textStyle: {
+                       color: '#999'
+                   }
+               }
+           },
+           series: [
+               { // For shadow
+                   type: 'bar',
+                   itemStyle: {
+                       normal: {color: 'rgba(0,0,0,0.05)'}
+                   },
+                   barGap:'-100%',
+                   barCategoryGap:'40%',
+                   // data: dataShadow,
+                   animation: false
+               },
+               {
+                   type: 'bar',
+                   itemStyle: {
+                       normal: {
+                           color: ['#2b3a67']
+                       },
+                       emphasis: {
+                           color: ['#2b3a67']
+                       }
+                   },
+                   data: arrtext
+               }
+           ]
+       };
+              myChart.setOption(option);
+        })
+      })
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var myChart = echarts.init(document.getElementById('bottom-left'));
+        var arr = [];
+        var arrtext = [];
+        $.get('http://118.89.233.206/bigdata/index.php/analysis/spend?year=2017&month=1').done(function (data) {
+     // console.log(dvalue.data.age);
+         var dvalue = JSON.parse(data);
+           var test=dvalue.data.asset
+           for(var i=0;i<test.length;i++)
+           {
+             arr.push(test[i].name);
+             // arrtext.push(test[i].value)
+           }
+           console.log(test);
+           option = {
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: arr
+            },
+            series : [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:test,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+         };
+          myChart.setOption(option);
+        })
+      })
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var myChart = echarts.init(document.getElementById('bottom-right'));
+        var arr = [];
+        var arrtext = [];
+        $.get('http://118.89.233.206/bigdata/index.php/analysis/spend?year=2017&month=1').done(function (data) {
+            var arr1 = [];
+           var arr2 = [];
+           var dvalue = JSON.parse(data);
+           // console.log(dvalue.data.job);
+           for(var i=0;i<dvalue.data.job.length;i++)
+           {
+             arr1.push(dvalue.data.job[i].name);
+             arr2.push(dvalue.data.job[i].value);
+           }
+           // console.log(arr1);
+           // console.log(arr2);
+         option = {
+           xAxis: {
+               type: 'category',
+               data: arr1,
+               axisLabel:{
+                 interval:0,//横轴信息全部显示
+                 rotate:-10,//-30度角倾斜显示
+               }
+           },
+           yAxis: {
+               type: 'value'
+           },
+           series: [{
+               data: arr2,
+               type: 'line'
+           }]
+       };
+
+          myChart.setOption(option);
+        })
+      })
+    </script>
+  </body>
+</html>

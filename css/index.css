@@ -1,0 +1,82 @@
+@font-face{
+  font-family: "siyuan";
+  src: url("../fonts/SourceHanSansCN-Heavy.otf");
+}
+body{
+  font-family: siyuan;
+  width: 1350px;
+  margin: 0 auto;
+}
+.carousel img{
+  width: 1350px;
+  height: 730px!important;
+}
+.navigation{
+  margin: 19px 0;
+  height: 30px;
+  color: #58606a;
+}
+.n-title{
+  vertical-align: top;
+  /* float: left; */
+}
+.n-title span{
+  font-size: 30px;
+  padding-left: 12px;
+  border-left: 10px solid #e57117;
+}
+.navigation div{
+  display: inline-block;
+}
+.n-tab{
+  float: right;
+  font-size: 25px;
+}
+.n-tab ul{
+  padding-top: 3px;
+  border: none;
+}
+.n-tab li{
+  cursor: pointer;
+  margin-left: 20px;
+  float: left;
+}
+.n-tab a{
+  color: #58606a;
+  padding: 0!important;
+}
+.n-tab .active{
+  padding: 0;
+  border-bottom: 2px solid #e57117;
+  background: #fff;
+}
+.tab-content{
+  width: 100%;
+  margin-top: 25px;
+}
+.navtab{
+  /* display: flex!important; */
+}
+.navtab span:first-child{
+  margin-left: 0;
+}
+.navtab span:hover{
+  cursor: pointer;
+}
+.navtab span{
+  display: inline-block;
+  width: 230px!important;
+  height: 130px;
+  text-align: center;
+  line-height: 130px;
+  background: url(../img/world1.png) no-repeat;
+  background-position: -30px 50px;
+  background-size: 100px 100px;
+  background-color: #e57117;
+  border-radius: 5px;
+  margin-left: 43px;
+  font-size: 30px;
+  color: white;
+  /* width: 300px; */
+  flex: 1;
+}
